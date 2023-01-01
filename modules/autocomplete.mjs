@@ -25,6 +25,9 @@ const caches = {
     },
     stim: async lang => {
         return gameData.items.getStims(lang).then(items => items.map(item => item.name).sort());
+    },
+    quest: async lang => {
+        return gameData.tasks.getAll(lang).then(tasks => tasks.map(task => task.name).sort());
     }
 };
 

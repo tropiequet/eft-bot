@@ -83,6 +83,7 @@
         "PMC level set to {{level}}.": "PMC level set to {{level}}.",
         "Price": "Price",
         "Price and Item Details": "Price and Item Details",
+        "Quest": "Quest",
         "Raid Start": "Raid Start",
         "Restock alert channel disabled for this server.": "Restock alert channel disabled for this server.",
         "Restock alert channel set to #{{channelName}}.": "Restock alert channel set to #{{channelName}}.",
@@ -156,6 +157,8 @@
         "hideout": "hideout",
         "hideout_management_level": "hideout_management_level",
         "hideout_management_skill_desc": "Hideout Management",
+        "info": "info",
+        "info_desc": "Gives you info about if an item is needed for quests/hideout",
         "intel_center_level": "intel_center_level",
         "invite": "invite",
         "invite_desc": "Get an invite link to invite the bot to another Discord server",
@@ -218,6 +221,9 @@
         "trader_desc": "Trader",
         "unlink": "unlink",
         "uptime": "uptime",
-        "uptime_desc": "Shows the uptime of the bot"
+        "uptime_desc": "Shows the uptime of the bot",
+        "quest": "quest",
+        "quest_desc": "Gives info about a quest",
+        "quest_search_desc": "Quest name to search for"
     }
 }

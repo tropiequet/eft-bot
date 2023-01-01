@@ -29,7 +29,7 @@ const defaultFunction = {
         // Get the search string from the user invoked command
         const searchString = interaction.options.getString('name');
 
-        const [ items, traders, stations, barters, crafts ] = await Promise.all([
+        const [ items, traders, stations, barters, crafts, ] = await Promise.all([
             gameData.items.getAll(interaction.locale),
             gameData.traders.getAll(interaction.locale),
             gameData.hideout.getAll(interaction.locale),
@@ -272,7 +272,7 @@ const defaultFunction = {
                 const title = `${stations.find(s => s.id === craft.station.id).name} ${t('level')} ${craft.level} ${t('Craft')}${locked}`;
                 embed.addFields({name: title, value: craftCost, inline: true});
             }
-
+            
             if (embed.data.fields?.length == 0) {
                 embed.setDescription(t('No prices available.'));
             }

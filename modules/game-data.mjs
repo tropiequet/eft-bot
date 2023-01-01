@@ -11,6 +11,7 @@ const gameData = {
     barters: false,
     crafts: false,
     items: false,
+    tasks: false,
     itemNames: {},
     flea: false,
     skills: [
@@ -291,6 +292,14 @@ export async function updateHideout() {
                 id
                 tarkovDataId
                 level
+                itemRequirements{
+                    id
+                    item{
+                        id
+                        name
+                    }
+                    count
+                }
             }
         }`);
     }
@@ -435,6 +444,126 @@ export async function getCrafts() {
     }
     return updateCrafts();
 }
+
+
+
+//added below
+export async function updateTasks() {
+    const query = `query {
+        tasks {
+            id
+            name
+            wikiLink
+            experience
+            trader{
+                id
+                name
+            }
+            map{
+                id
+                name
+            }
+            minPlayerLevel
+            traderLevelRequirements{
+                id
+                level
+            }
+            objectives {
+                id
+                type
+                description
+                maps{
+                    id
+                    name
+                }
+                ...on TaskObjectiveItem {
+                  item {
+                    id
+                    name
+                  }
+                
+                  type
+                  count
+                  foundInRaid
+                  optional
+                }
+                ... on TaskObjectiveQuestItem{
+                    id
+                    questItem{
+                        id
+                        name
+                    }
+                    count
+                }
+                ... on TaskObjectiveShoot{
+                    id
+                    count
+                }
+            }
+            neededKeys{
+                keys{
+                    id
+                    name
+                }
+                map{
+                    id
+                    name
+                }
+            }
+            finishRewards{
+                traderStanding{
+                  trader{
+                    id
+                    name
+                  }
+                  standing
+                }
+                items{
+                  item{
+                    id
+                    name
+                  }
+                  count
+                }
+                offerUnlock{
+                  id
+                  trader{
+                    id
+                    name
+                  }
+                  level
+                  item{
+                    id
+                    name
+                  }
+                }
+                skillLevelReward{
+                  name
+                  level
+                }
+                traderUnlock{
+                  id
+                  name
+                }
+              }
+
+        }
+    }`;
+  
+    const response = await graphqlRequest({ graphql: query });
+    gameData.tasks = response.data.tasks;
+
+    return gameData.tasks;
+}
+
+export async function getTasks() {
+    if (gameData.tasks) {
+        return gameData.tasks;
+    }
+    return updateTasks();
+}
+
+//added above
 
 export async function updateItemNames(lang = 'en') {
     lang = validateLanguage(lang);
@@ -586,6 +715,23 @@ export async function updateItems() {
             bartersUsing {
                 id
             }
+            usedInTasks { 
+                id
+                name   
+                objectives {
+                  ... on TaskObjectiveItem {
+                    item {
+                      id
+                      name
+                    }
+                    type
+                    count
+                    description
+                    foundInRaid
+                    optional
+                  }
+                }
+              }
         }
     }`;
     const response = await graphqlRequest({ graphql: query });
@@ -764,6 +910,9 @@ export default {
     },
     crafts: {
         getAll: getCrafts
+    },
+    tasks: {
+        getAll: getTasks
     },
     items: {
         getAll: getItems,
